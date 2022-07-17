@@ -1,24 +1,39 @@
 {
-  "name": "pkg-proxy",
-  "private": true,
-  "version": "0.0.0",
+  "name": "http-proxy",
+  "version": "1.0.0",
   "scripts": {
-    "build:dev": "esbuild index.mjs --bundle --platform=node --target=node18 --outfile=build/dev.js --watch",
-    "build:dist": "rm -rf build/*; mkdir -p build; esbuild index.mjs --bundle --platform=node --target=node18 --outfile=build/dist.js",
-    "start:dev": "nodemon build/dev.js",
-    "pkg": "pkg --options max-old-space-size=256 --target node18-macos --compress Brotli --out-path build build/dist.js"
+    "build": "esbuild index.mjs --bundle --platform=node --target=node18 --outfile=build/build.js",
+    "dist": "npm run build; pkg --target node18 --out-path build build/build.js",
+    "lint": "eslint index.mjs"
   },
   "dependencies": {
     "@fastify/http-proxy": "^8.2.1",
     "env-schema": "^5.0.0",
     "esbuild": "^0.14.49",
+    "eslint": "^8.20.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-promise": "^6.0.0",
     "fastify": "^4.2.1",
     "fluent-json-schema": "^3.1.0",
-    "nodemon": "^2.0.19",
-    "pino-pretty": "^8.1.0",
     "pkg": "^5.8.0"
   },
   "engines": {
     "node": ">= 18.3.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "es2021": true,
+      "node": true
+    },
+    "extends": [
+      "standard"
+    ],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "rules": {}
   }
 }
