@@ -3,21 +3,22 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "nodemon --exec 'esbuild index.mjs --bundle --platform=node --target=node18 --outfile=build/dev.js; node build/dev.js' --ignore build",
-    "build": "rm -rf build/*; mkdir -p build; esbuild index.mjs --bundle --platform=node --target=node18 --outfile=build/dist.js",
-    "dist": "pkg --options max-old-space-size=256 --target node18-macos --compress Brotli --out-path build build/dist.js"
+    "build:dev": "esbuild index.mjs --bundle --platform=node --target=node18 --outfile=build/dev.js --watch",
+    "build:dist": "rm -rf build/*; mkdir -p build; esbuild index.mjs --bundle --platform=node --target=node18 --outfile=build/dist.js",
+    "start:dev": "nodemon build/dev.js",
+    "pkg": "pkg --options max-old-space-size=256 --target node18-macos --compress Brotli --out-path build build/dist.js"
   },
-  "devDependencies": {
+  "dependencies": {
+    "@fastify/http-proxy": "^8.2.1",
+    "env-schema": "^5.0.0",
     "esbuild": "^0.14.49",
+    "fastify": "^4.2.1",
+    "fluent-json-schema": "^3.1.0",
     "nodemon": "^2.0.19",
     "pino-pretty": "^8.1.0",
     "pkg": "^5.8.0"
   },
-  "dependencies": {
-    "@fastify/http-proxy": "^8.2.1",
-    "fastify": "^4.2.1"
-  },
   "engines": {
-    "node": ">= 18.0.0"
+    "node": ">= 18.3.0"
   }
 }
